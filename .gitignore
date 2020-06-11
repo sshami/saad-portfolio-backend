@@ -1,0 +1,11 @@
+# Env files
+.env*
+
+# Python
+*.pyc
+.idea/
+
+# Static files and Media files directory
+/staticfiles
+/mediafiles
+
