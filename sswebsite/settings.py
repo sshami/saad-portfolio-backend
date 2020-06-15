@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'wagtail.api.v2',
 
     'rest_framework',
+    'corsheaders',
 
     'modelcluster',
     'taggit',
@@ -72,6 +73,9 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
     'wagtail.contrib.redirects.middleware.RedirectMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
+
 ]
 
 ROOT_URLCONF = 'sswebsite.urls'
@@ -154,3 +158,12 @@ MEDIA_URL = "/mediafiles/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "mediafiles")
 
 WAGTAIL_SITE_NAME = 'Saad'
+
+# Note - for production settings - use whitelist instead of allowing all
+CORS_ORIGIN_ALLOW_ALL = True
+# CORS_ORIGIN_WHITELIST = [
+#     "https://example.com",
+#     "https://sub.example.com",
+#     "http://localhost:8080",
+#     "http://127.0.0.1:9000"
+# ]
