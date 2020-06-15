@@ -61,6 +61,7 @@ INSTALLED_APPS = [
 
 
     'homepage',
+    'photography',
 ]
 
 MIDDLEWARE = [
