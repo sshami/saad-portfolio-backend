@@ -51,15 +51,18 @@ class ImageCaptionBlock(blocks.StructBlock):
 
 
 class PhotographyAlbum(Page):
+    title_font_size = models.DecimalField('Title Font Size', max_digits=5, decimal_places=2, default=12.5)
     photos = StreamField([
         ('Image', ImageCaptionBlock()),
     ])
 
     content_panels = Page.content_panels + [
+        FieldPanel('title_font_size'),
         StreamFieldPanel('photos'),
     ]
 
     api_fields = [
+        APIField('title_font_size'),
         APIField('photos'),
     ]
 
