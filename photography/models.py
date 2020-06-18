@@ -3,6 +3,7 @@ from wagtail.core import blocks
 from wagtail.core.models import Page
 from wagtail.core.fields import RichTextField, StreamField
 from wagtail.images.blocks import ImageChooserBlock
+from wagtail.admin.edit_handlers import PageChooserPanel
 from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel
 from pprint import pprint
 
@@ -10,13 +11,26 @@ from wagtail.api import APIField
 
 class Photography(Page):
     page_description = models.CharField(max_length=255)
+    default_album = models.ForeignKey(
+        'wagtailcore.Page',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+    )
 
     content_panels = Page.content_panels + [
         FieldPanel('page_description'),
+        PageChooserPanel('default_album', 'photography.PhotographyAlbum'),
     ]
 
     subpage_types = [
         'photography.PhotographyAlbum',
+    ]
+
+    api_fields = [
+        APIField('page_description'),
+        APIField('default_album'),
     ]
 
 
