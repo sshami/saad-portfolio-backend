@@ -1,15 +1,13 @@
-from django.shortcuts import render
-from django.core.files.storage import FileSystemStorage
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from .models import Homepage
+from .serializers import HomepageSerializer
 
+class HomepageView(APIView):
+    #permission_classes = [IsAuthenticated]
 
-def image_upload(request):
-    if request.method == "POST" and request.FILES["image_file"]:
-        image_file = request.FILES["image_file"]
-        fs = FileSystemStorage()
-        filename = fs.save(image_file.name, image_file)
-        image_url = fs.url(filename)
-        print(image_url)
-        return render(request, "upload.html", {
-            "image_url": image_url
-        })
-    return render(request, "upload.html")
+    def get(self, request):
+        photography_page = Homepage.objects.all()
+        serializer = HomepageSerializer(photography_page, many=True)
+        return Response(serializer.data)
+

@@ -15,7 +15,6 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, re_path, include
-from django.conf.urls import url
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -23,20 +22,24 @@ from wagtail.admin import urls as wagtailadmin_urls
 from wagtail.core import urls as wagtail_urls
 from wagtail.documents import urls as wagtaildocs_urls
 
-from rest_framework import routers
-from photography import views
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
 
-from .api import api_router
+from homepage.views import HomepageView
+from photography.views import PhotographyPageView, PhotographyAlbumsView
 
-api_router_restframework = routers.DefaultRouter()
-api_router_restframework.register(r'photography', views.PhotographyViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    url(r'^api/', include(api_router_restframework.urls)),
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('api/homepage/', HomepageView.as_view()),
+    path('api/photography/', PhotographyPageView.as_view()),
+    path('api/photographyalbums/', PhotographyAlbumsView.as_view()),
     re_path(r'^cms/', include(wagtailadmin_urls)),
     re_path(r'^documents/', include(wagtaildocs_urls)),
-    url(r'^api/v2/', api_router.urls),
     re_path(r'', include(wagtail_urls)),
 ]
 

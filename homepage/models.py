@@ -21,12 +21,3 @@ class Homepage(Page):
         FieldPanel('contact_instagram'),
         FieldPanel('contact_facebook')
     ]
-
-    api_fields = [
-        APIField('bio_title'),
-        APIField('bio_paragraph1'),
-        APIField('bio_paragraph2'),
-        APIField('contact_email'),
-        APIField('contact_instagram'),
-        APIField('contact_facebook')
-    ]

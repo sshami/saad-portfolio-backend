@@ -133,6 +133,12 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+}
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
@@ -163,8 +169,6 @@ WAGTAIL_SITE_NAME = 'Saad'
 # Note - for production settings - use whitelist instead of allowing all
 CORS_ORIGIN_ALLOW_ALL = True
 # CORS_ORIGIN_WHITELIST = [
-#     "https://example.com",
-#     "https://sub.example.com",
 #     "http://localhost:8080",
-#     "http://127.0.0.1:9000"
+#     "http://192.168.1.20:8080"
 # ]
