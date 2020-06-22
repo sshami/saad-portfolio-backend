@@ -21,6 +21,6 @@ class PhotographyAlbumsView(APIView):
         album_slug = request.query_params.get('album', None)
         if album_slug is not None:
             albums = PhotographyAlbum.objects.filter(slug=album_slug)
-        serializer = PhotographyAlbumSerializer(albums, many=True)
+        serializer = PhotographyAlbumSerializer(albums, many=True, context={"request": request})
         return Response(serializer.data)
 

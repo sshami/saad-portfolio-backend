@@ -1,3 +1,4 @@
+from django.conf import settings
 from .models import Photography, PhotographyAlbum
 from rest_framework import serializers
 
@@ -25,7 +26,7 @@ class PhotographyAlbumSerializer(serializers.ModelSerializer):
             photo_id = block.id
             value = {
                 'title': block.value.get('title'),
-                'image_url': block.value.get('image').file.url,
+                'image_url': settings.HOSTNAME + block.value.get('image').file.url,
                 'credit_one': block.value.get('credit_one'),
                 'credit_two': block.value.get('credit_two'),
                 'credit_three': block.value.get('credit_three'),
