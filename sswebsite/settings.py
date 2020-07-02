@@ -27,7 +27,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 #DEBUG = True
 DEBUG = int(os.environ.get("DEBUG", default=0))
 
-HOSTNAME = 'http://192.168.1.13:8000'
+HOSTNAME = 'http://192.168.1.20:8000'
 
 #ALLOWED_HOSTS = []
 ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
@@ -174,3 +174,16 @@ CORS_ORIGIN_ALLOW_ALL = True
 #     "http://localhost:8080",
 #     "http://192.168.1.20:8080"
 # ]
+
+CORS_ALLOW_HEADERS = [
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+    'x-auth-token',
+]
