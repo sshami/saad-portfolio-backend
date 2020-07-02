@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'wagtail.api.v2',
 
     'rest_framework',
+    'rest_framework.authtoken',
     'corsheaders',
 
     'modelcluster',
@@ -138,6 +139,7 @@ AUTH_PASSWORD_VALIDATORS = [
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
     )
 }
 

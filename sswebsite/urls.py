@@ -26,6 +26,7 @@ from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
 )
+from rest_framework.authtoken import views
 
 from homepage.views import HomepageView
 from photography.views import PhotographyPageView, PhotographyAlbumsView
@@ -33,11 +34,19 @@ from photography.views import PhotographyPageView, PhotographyAlbumsView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+
+    # JWT Auth
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+
+    # API Endpoints
     path('api/homepage/', HomepageView.as_view()),
     path('api/photography/', PhotographyPageView.as_view()),
     path('api/photographyalbums/', PhotographyAlbumsView.as_view()),
+
+    # Token Auth
+    re_path(r'^api-token-auth/', views.obtain_auth_token),
+
     re_path(r'^cms/', include(wagtailadmin_urls)),
     re_path(r'^documents/', include(wagtaildocs_urls)),
     re_path(r'', include(wagtail_urls)),

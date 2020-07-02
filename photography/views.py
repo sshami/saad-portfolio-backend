@@ -3,10 +3,15 @@ from rest_framework.response import Response
 from .models import Photography, PhotographyAlbum
 from .serializers import PhotographySerializer, PhotographyAlbumSerializer
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.authentication import TokenAuthentication
+from rest_framework_simplejwt.authentication import JWTAuthentication
 
 
 class PhotographyPageView(APIView):
-    #permission_classes = [IsAuthenticated]
+    # Using either token authentication for client-server (frontend client app / backend service app) auth
+    # or JWT authentication for app user (for future use in case it is needed)
+    authentication_classes = [TokenAuthentication, JWTAuthentication]
+    permission_classes = [IsAuthenticated]
 
     def get(self, request):
         photography_page = Photography.objects.all()
@@ -14,7 +19,10 @@ class PhotographyPageView(APIView):
         return Response(serializer.data)
 
 class PhotographyAlbumsView(APIView):
-    #permission_classes = [IsAuthenticated]
+    # Using either token authentication for client-server (frontend client app / backend service app) auth
+    # or JWT authentication for app user (for future use in case it is needed)
+    authentication_classes = [TokenAuthentication, JWTAuthentication]
+    permission_classes = [IsAuthenticated]
 
     def get(self, request):
         albums = PhotographyAlbum.objects.filter(live=True)
