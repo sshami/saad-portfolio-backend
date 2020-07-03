@@ -27,7 +27,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 #DEBUG = True
 DEBUG = int(os.environ.get("DEBUG", default=0))
 
-HOSTNAME = 'http://192.168.1.20:8000'
+HOSTNAME = os.environ.get("HOSTNAME")
 
 #ALLOWED_HOSTS = []
 ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
