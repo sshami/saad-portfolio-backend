@@ -14,7 +14,7 @@ RUN mkdir -p /home/app
 
 # install psycopg2 dependencies
 RUN apk update \
-    && apk add postgresql-dev gcc python3-dev musl-dev
+    && apk add postgresql-dev gcc python3-dev musl-dev jpeg-dev zlib-dev
 
 # create the app user
 RUN addgroup -S app && adduser -S app -G app
