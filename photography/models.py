@@ -6,7 +6,6 @@ from wagtail.images.blocks import ImageChooserBlock
 from wagtail.admin.edit_handlers import PageChooserPanel
 from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel
 
-
 class Photography(Page):
     page_description = models.CharField(max_length=255)
     default_album = models.ForeignKey(
@@ -53,6 +52,14 @@ class PhotographyAlbum(Page):
     parent_page_type = [
         'photography.Photography'
     ]
+
+    def save(self, *args, **kwargs):
+        # Creates a resized rendition of all photos for mobile use
+        for block in self.photos:
+            photo = block.value.get('image')
+            photo.get_rendition('width-700')
+        super(PhotographyAlbum, self).save(*args, **kwargs)
+
 
 
 

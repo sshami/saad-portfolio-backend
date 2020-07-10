@@ -27,6 +27,7 @@ class PhotographyAlbumSerializer(serializers.ModelSerializer):
             value = {
                 'title': block.value.get('title'),
                 'image_url': settings.HOSTNAME + block.value.get('image').file.url,
+                'image_url_mobile': settings.HOSTNAME + block.value.get('image').get_rendition('width-700').url,
                 'credit_one': block.value.get('credit_one'),
                 'credit_two': block.value.get('credit_two'),
                 'credit_three': block.value.get('credit_three'),
