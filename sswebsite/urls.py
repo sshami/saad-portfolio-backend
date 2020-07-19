@@ -30,7 +30,7 @@ from rest_framework.authtoken import views
 
 from homepage.views import HomepageView
 from photography.views import PhotographyPageView, PhotographyAlbumsView
-
+from webdev.views import WebdevPageView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -43,6 +43,7 @@ urlpatterns = [
     path('api/homepage/', HomepageView.as_view()),
     path('api/photography/', PhotographyPageView.as_view()),
     path('api/photographyalbums/', PhotographyAlbumsView.as_view()),
+    path('api/webdev/', WebdevPageView.as_view()),
 
     # Token Auth
     re_path(r'^api-token-auth/', views.obtain_auth_token),
