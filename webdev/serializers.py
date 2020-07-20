@@ -53,6 +53,7 @@ class WebdevSerializer(serializers.ModelSerializer):
             value = {
                 'title': block.value.title,
                 'slug': block.value.slug,
+                'web_url': block.value.web_url,
                 'summary': block.value.summary,
                 'display_image': display_images
             }

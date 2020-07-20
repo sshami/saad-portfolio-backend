@@ -46,10 +46,12 @@ class WebdevProject(Page):
             ('StandardProject', StandardProject())
         ], min_num=0, max_num=1)
     )
+    web_url = models.URLField(blank=True)
 
     content_panels = Page.content_panels + [
         FieldPanel('summary'),
         StreamFieldPanel('display_image'),
+        FieldPanel('web_url')
     ]
 
     parent_page_type = [
