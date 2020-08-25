@@ -1,6 +1,7 @@
 from rest_framework import serializers
-from .models import Webdev, WebdevProject
+from .models import Webdev, WebdevProject, ProjectDetailPage
 from django.conf import settings
+from pprint import pprint
 
 class WebdevSerializer(serializers.ModelSerializer):
 
@@ -48,7 +49,6 @@ class WebdevSerializer(serializers.ModelSerializer):
                     settings.HOSTNAME + \
                     block.value.display_image[0].value.get('demo_display').get_rendition('width-700').url
 
-
             # Gather all values for this featured project
             value = {
                 'title': block.value.title,
@@ -61,3 +61,34 @@ class WebdevSerializer(serializers.ModelSerializer):
             feat_projects.append({'id': project_id, 'value': value})
 
         return feat_projects
+
+
+class ProjectDetailPageSerializer(serializers.ModelSerializer):
+
+    body = serializers.SerializerMethodField()
+
+    class Meta:
+        model = ProjectDetailPage
+        fields = ['id', 'title', 'slug', 'project_listing', 'body']
+        depth = 1
+
+    # Need to unpack the body streamfield
+    # in order to display all needed content for project detail page body
+    def get_body(self, obj):
+        body_items = []
+        for block in obj.body:
+            item = {}
+            #print(block.block)
+            #print(pprint(vars(block.block)))
+            item['type'] = block.block.name
+            body_items.append(item)
+            if item['type'] == 'single_image':
+                item['image'] = settings.HOSTNAME + block.value.get('image').file.url
+            elif item['type'] == 'double_image':
+                item['image_left'] = settings.HOSTNAME + block.value.get('image_left').file.url
+                item['image_right'] = settings.HOSTNAME + block.value.get('image_left').file.url
+            elif item['type'] == 'paragraph':
+                item['content'] = block.value.source
+
+        return body_items
+

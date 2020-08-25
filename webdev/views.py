@@ -1,7 +1,7 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .models import Webdev
-from .serializers import WebdevSerializer
+from .models import Webdev, ProjectDetailPage
+from .serializers import WebdevSerializer, ProjectDetailPageSerializer
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
 from rest_framework_simplejwt.authentication import JWTAuthentication
@@ -15,4 +15,12 @@ class WebdevPageView(APIView):
     def get(self, request):
         webdev_page = Webdev.objects.all()
         serializer = WebdevSerializer(webdev_page, many=True)
+        return Response(serializer.data)
+
+
+class ProjectDetailPageView(APIView):
+
+    def get(self, request):
+        projects = ProjectDetailPage.objects.all()
+        serializer = ProjectDetailPageSerializer(projects, many=True)
         return Response(serializer.data)
