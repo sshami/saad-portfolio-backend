@@ -84,6 +84,7 @@ class DoubleImageBlock(blocks.StructBlock):
 
 
 # Project Detail Page
+# TODO: Consider merging this model with WebdevProject model
 class ProjectDetailPage(Page):
     project_listing = models.ForeignKey(
         'wagtailcore.Page',

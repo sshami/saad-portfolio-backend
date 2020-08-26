@@ -1,7 +1,8 @@
 from rest_framework import serializers
 from .models import Webdev, WebdevProject, ProjectDetailPage
 from django.conf import settings
-from pprint import pprint
+from rest_framework.generics import get_object_or_404
+
 
 class WebdevSerializer(serializers.ModelSerializer):
 
@@ -66,11 +67,46 @@ class WebdevSerializer(serializers.ModelSerializer):
 class ProjectDetailPageSerializer(serializers.ModelSerializer):
 
     body = serializers.SerializerMethodField()
+    project_listing = serializers.SerializerMethodField()
 
     class Meta:
         model = ProjectDetailPage
         fields = ['id', 'title', 'slug', 'project_listing', 'body']
         depth = 1
+
+    # Need to unpack the page chooser block field
+    # in order to display all needed contents for project detail page listing
+    # TODO: Make this more DRY - consider merging the WebDevProject and ProjectDetailPage models
+    def get_project_listing(self, obj):
+        project_listing_page = {}
+        project_listing_page['images'] = {}
+        project_listing_id = obj.project_listing.id
+        project_listing_obj = get_object_or_404(WebdevProject, id=project_listing_id)
+        project_display_image_type = project_listing_obj.display_image.stream_data[0].get('type')
+        project_listing_page['type'] = project_display_image_type
+        if project_display_image_type == 'WebProject':
+            project_listing_page['images']['demo_laptop_display'] = \
+                settings.HOSTNAME + \
+                project_listing_obj.display_image[0].value.get('demo_laptop_display').file.url
+            project_listing_page['images']['demo_mobile_display'] = \
+                settings.HOSTNAME + \
+                project_listing_obj.display_image[0].value.get('demo_mobile_display').file.url
+            project_listing_page['images']['demo_laptop_display-mobile'] = \
+                settings.HOSTNAME + \
+                project_listing_obj.display_image[0].value.get('demo_laptop_display').get_rendition('width-700').url
+            project_listing_page['images']['demo_mobile_display-mobile'] = \
+                settings.HOSTNAME + \
+                project_listing_obj.display_image[0].value.get('demo_mobile_display').get_rendition('width-700').url
+        elif project_display_image_type == 'StandardProject':
+            project_listing_page['images']['demo_display'] = \
+                settings.HOSTNAME + \
+                project_listing_obj.display_image[0].value.get('demo_display').file.url
+            project_listing_page['images']['demo_display-mobile'] = \
+                settings.HOSTNAME + \
+                project_listing_obj.display_image[0].value.get('demo_display').get_rendition('width-700').url
+
+        return project_listing_page
+
 
     # Need to unpack the body streamfield
     # in order to display all needed content for project detail page body
@@ -78,8 +114,6 @@ class ProjectDetailPageSerializer(serializers.ModelSerializer):
         body_items = []
         for block in obj.body:
             item = {}
-            #print(block.block)
-            #print(pprint(vars(block.block)))
             item['type'] = block.block.name
             body_items.append(item)
             if item['type'] == 'single_image':
