@@ -84,10 +84,16 @@ class ProjectDetailPageSerializer(serializers.ModelSerializer):
             body_items.append(item)
             if item['type'] == 'single_image':
                 item['image'] = settings.HOSTNAME + block.value.get('image').file.url
+                item['image-mobile'] = settings.HOSTNAME + block.value.get('image').get_rendition('width-700').url
             elif item['type'] == 'double_image':
                 item['image_left'] = settings.HOSTNAME + block.value.get('image_left').file.url
                 item['image_right'] = settings.HOSTNAME + block.value.get('image_left').file.url
+                item['image_left-mobile'] = settings.HOSTNAME + \
+                    block.value.get('image_left').get_rendition('width-700').url
+                item['image_right-mobile'] = settings.HOSTNAME + \
+                    block.value.get('image_right').get_rendition('width-700').url
             elif item['type'] == 'paragraph':
+                # TODO: Sanitize HTML (if not already done by Wagtail) to protect from XSS
                 item['content'] = block.value.source
 
         return body_items

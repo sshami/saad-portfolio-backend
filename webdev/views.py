@@ -19,6 +19,10 @@ class WebdevPageView(APIView):
 
 
 class ProjectDetailPageView(APIView):
+    # Using either token authentication for client-server (frontend client app / backend service app) auth
+    # or JWT authentication for app user (for future use in case it is needed)
+    # authentication_classes = [TokenAuthentication, JWTAuthentication]
+    # permission_classes = [IsAuthenticated]
 
     def get(self, request):
         projects = ProjectDetailPage.objects.all()
