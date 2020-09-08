@@ -84,6 +84,8 @@ class ProjectDetailPageSerializer(serializers.ModelSerializer):
         project_listing_obj = get_object_or_404(WebdevProject, id=project_listing_id)
         project_display_image_type = project_listing_obj.display_image.stream_data[0].get('type')
         project_listing_page['type'] = project_display_image_type
+        project_listing_demo_web_url = project_listing_obj.web_url
+        project_listing_page['url'] = project_listing_demo_web_url
         if project_display_image_type == 'WebProject':
             project_listing_page['images']['demo_laptop_display'] = \
                 settings.HOSTNAME + \
@@ -121,7 +123,7 @@ class ProjectDetailPageSerializer(serializers.ModelSerializer):
                 item['image-mobile'] = settings.HOSTNAME + block.value.get('image').get_rendition('width-700').url
             elif item['type'] == 'double_image':
                 item['image_left'] = settings.HOSTNAME + block.value.get('image_left').file.url
-                item['image_right'] = settings.HOSTNAME + block.value.get('image_left').file.url
+                item['image_right'] = settings.HOSTNAME + block.value.get('image_right').file.url
                 item['image_left-mobile'] = settings.HOSTNAME + \
                     block.value.get('image_left').get_rendition('width-700').url
                 item['image_right-mobile'] = settings.HOSTNAME + \
