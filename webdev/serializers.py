@@ -93,10 +93,10 @@ class ProjectDetailPageSerializer(serializers.ModelSerializer):
             project_listing_page['images']['demo_mobile_display'] = \
                 settings.HOSTNAME + \
                 project_listing_obj.display_image[0].value.get('demo_mobile_display').file.url
-            project_listing_page['images']['demo_laptop_display-mobile'] = \
+            project_listing_page['images']['demo_laptop_display_small'] = \
                 settings.HOSTNAME + \
                 project_listing_obj.display_image[0].value.get('demo_laptop_display').get_rendition('width-700').url
-            project_listing_page['images']['demo_mobile_display-mobile'] = \
+            project_listing_page['images']['demo_mobile_display_small'] = \
                 settings.HOSTNAME + \
                 project_listing_obj.display_image[0].value.get('demo_mobile_display').get_rendition('width-700').url
         elif project_display_image_type == 'StandardProject':
@@ -120,14 +120,16 @@ class ProjectDetailPageSerializer(serializers.ModelSerializer):
             body_items.append(item)
             if item['type'] == 'single_image':
                 item['image'] = settings.HOSTNAME + block.value.get('image').file.url
-                item['image-mobile'] = settings.HOSTNAME + block.value.get('image').get_rendition('width-700').url
+                item['image_small'] = settings.HOSTNAME + block.value.get('image').get_rendition('width-700').url
+                item['caption'] = block.value.get('caption')
             elif item['type'] == 'double_image':
                 item['image_left'] = settings.HOSTNAME + block.value.get('image_left').file.url
                 item['image_right'] = settings.HOSTNAME + block.value.get('image_right').file.url
-                item['image_left-mobile'] = settings.HOSTNAME + \
+                item['image_left_small'] = settings.HOSTNAME + \
                     block.value.get('image_left').get_rendition('width-700').url
-                item['image_right-mobile'] = settings.HOSTNAME + \
+                item['image_right_small'] = settings.HOSTNAME + \
                     block.value.get('image_right').get_rendition('width-700').url
+                item['caption'] = block.value.get('caption')
             elif item['type'] == 'paragraph':
                 # TODO: Sanitize HTML (if not already done by Wagtail) to protect from XSS
                 item['content'] = block.value.source
