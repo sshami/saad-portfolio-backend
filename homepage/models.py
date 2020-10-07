@@ -1,9 +1,8 @@
 from django.db import models
 from wagtail.core.models import Page
+from wagtail.core.fields import RichTextField
 from wagtail.admin.edit_handlers import FieldPanel
-
-from wagtail.api import APIField
-
+from wagtail.images.edit_handlers import ImageChooserPanel
 
 class Homepage(Page):
     bio_title = models.CharField(max_length=255)
@@ -20,4 +19,20 @@ class Homepage(Page):
         FieldPanel('contact_email'),
         FieldPanel('contact_instagram'),
         FieldPanel('contact_facebook')
+    ]
+
+
+class About(Page):
+    bio_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+    body = RichTextField()
+
+    content_panels = Page.content_panels + [
+        ImageChooserPanel('bio_image'),
+        FieldPanel('body')
     ]

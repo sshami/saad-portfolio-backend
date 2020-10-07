@@ -28,7 +28,7 @@ from rest_framework_simplejwt.views import (
 )
 from rest_framework.authtoken import views
 
-from homepage.views import HomepageView
+from homepage.views import HomepageView, AboutView
 from photography.views import PhotographyPageView, PhotographyAlbumsView
 from webdev.views import WebdevPageView, ProjectDetailPageView
 
@@ -41,6 +41,7 @@ urlpatterns = [
 
     # API Endpoints
     path('api/homepage/', HomepageView.as_view()),
+    path('api/about/', AboutView.as_view()),
     path('api/photography/', PhotographyPageView.as_view()),
     path('api/photographyalbums/', PhotographyAlbumsView.as_view()),
     path('api/webdev/', WebdevPageView.as_view()),
