@@ -11,6 +11,7 @@ class Homepage(Page):
     contact_email = models.EmailField('Email', blank=False)
     contact_instagram = models.URLField('Instagram', blank=True)
     contact_facebook = models.URLField('Facebook', blank=True)
+    contact_linkedin = models.URLField('Linkedin', blank=True)
 
     content_panels = Page.content_panels + [
         FieldPanel('bio_title'),
@@ -18,7 +19,8 @@ class Homepage(Page):
         FieldPanel('bio_paragraph2'),
         FieldPanel('contact_email'),
         FieldPanel('contact_instagram'),
-        FieldPanel('contact_facebook')
+        FieldPanel('contact_facebook'),
+        FieldPanel('contact_linkedin')
     ]
 
 
