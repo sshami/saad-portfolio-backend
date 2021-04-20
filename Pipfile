@@ -9,7 +9,7 @@ verify_ssl = true
 psycopg2 = "==2.8.3"
 gunicorn= "==19.9.0"
 django = "==3.0.7"
-wagtail = "==2.9"
+wagtail = "==2.11.6"
 django-cors-headers = "==3.4.0"
 djangorestframework-simplejwt = "==4.4.0"
 
